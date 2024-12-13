@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Time Tracking</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f9f9f9;
+        }
+        .container {
+            text-align: center;
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #fff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .time {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        .date {
+            font-size: 1rem;
+            margin-bottom: 20px;
+            color: #555;
+        }
+        .input-box {
+            margin-bottom: 20px;
+        }
+        input {
+            width: 200px;
+            padding: 10px;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        button {
+            width: 200px;
+            padding: 10px;
+            font-size: 1rem;
+            margin: 5px 0;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #e0e0e0;
+            color: #333;
+        }
+        button:hover {
+            background-color: #d0d0d0;
+        }
+        .confirmation {
+            margin-top: 20px;
+            font-size: 1rem;
+            color: #28a745;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="time" id="time">00:00 AM</div>
+        <div class="date" id="date">YYYY-MM-DD</div>
+        <div class="input-box">
+            <label for="employeeId">กรอกรหัสพนักงาน</label><br>
+            <input type="text" id="employeeId" placeholder="รหัสพนักงาน">
+        </div>
+        <button onclick="logTime()">ลงเวลา</button>
+        <button onclick="goBack()">ย้อนกลับ</button>
+        <div class="confirmation" id="confirmation"></div>
+    </div>
+
+    <script>
+        function updateTimeAndDate() {
+            const now = new Date();
+            const hours = now.getHours();
+            const minutes = now.getMinutes();
+            const seconds = now.getSeconds();
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+
+            const formattedTime = ${String(hours % 12 || 12).padStart(2, '0')}:${String(minutes).padStart(2, '0')} ${ampm};
+            const formattedDate = ${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')};
+
+            document.getElementById('time').textContent = formattedTime;
+            document.getElementById('date').textContent = formattedDate;
+        }
+
+        function logTime() {
+            const employeeId = document.getElementById('employeeId').value;
+            const confirmation = document.getElementById('confirmation');
+            if (employeeId.trim() === '') {
+                alert('กรุณากรอกรหัสพนักงาน');
+            } else {
+                const now = new Date();
+                const formattedTime = ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')};
+                const formattedDate = ${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')};
+
+                confirmation.textContent = ยืนยันการลงเวลาแล้ว: รหัสพนักงาน ${employeeId}, วันที่ ${formattedDate}, เวลา ${formattedTime};
+                confirmation.style.display = 'block';
+            }
+        }
+
+        function goBack() {
+            alert('กลับไปยังหน้าก่อนหน้า');
+        }
+
+        // Update time and date every second
+        setInterval(updateTimeAndDate, 1000);
+        updateTimeAndDate();
+    </script>
+</body>
+</html>
