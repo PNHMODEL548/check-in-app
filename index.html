@@ -13,7 +13,9 @@
             justify-content: center;
             height: 100vh;
             margin: 0;
-            background-color: #f9f9f9;
+            background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #00ff00, #0073ff, #8a00ff);
+            background-size: 400% 400%;
+            animation: rainbow 10s ease infinite;
         }
         .container {
             text-align: center;
@@ -22,6 +24,8 @@
             border-radius: 10px;
             background-color: #fff;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            animation: fadeIn 2s ease;
         }
         .time {
             font-size: 2rem;
@@ -43,6 +47,7 @@
             border: 1px solid #ccc;
             border-radius: 5px;
             box-sizing: border-box;
+            background-color: #f7f7f7;
         }
         button {
             width: 200px;
@@ -54,15 +59,32 @@
             cursor: pointer;
             background-color: #e0e0e0;
             color: #333;
+            transition: background-color 0.3s ease;
         }
         button:hover {
             background-color: #d0d0d0;
+        }
+        button:active {
+            background-color: #b0b0b0;
+        }
+        button {
+            background-image: linear-gradient(to right, #ff7e5f, #feb47b);
+            color: white;
         }
         .confirmation {
             margin-top: 20px;
             font-size: 1rem;
             color: #28a745;
             display: none;
+        }
+        @keyframes rainbow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
         }
     </style>
 </head>
@@ -87,8 +109,8 @@
             const seconds = now.getSeconds();
             const ampm = hours >= 12 ? 'PM' : 'AM';
 
-            const formattedTime = ${String(hours % 12 || 12).padStart(2, '0')}:${String(minutes).padStart(2, '0')} ${ampm};
-            const formattedDate = ${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')};
+            const formattedTime = `${String(hours % 12 || 12).padStart(2, '0')}:${String(minutes).padStart(2, '0')} ${ampm}`;
+            const formattedDate = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
 
             document.getElementById('time').textContent = formattedTime;
             document.getElementById('date').textContent = formattedDate;
@@ -101,10 +123,10 @@
                 alert('กรุณากรอกรหัสพนักงาน');
             } else {
                 const now = new Date();
-                const formattedTime = ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')};
-                const formattedDate = ${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')};
+                const formattedTime = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
+                const formattedDate = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
 
-                confirmation.textContent = ยืนยันการลงเวลาแล้ว: รหัสพนักงาน ${employeeId}, วันที่ ${formattedDate}, เวลา ${formattedTime};
+                confirmation.textContent = `ยืนยันการลงเวลาแล้ว: รหัสพนักงาน ${employeeId}, วันที่ ${formattedDate}, เวลา ${formattedTime}`;
                 confirmation.style.display = 'block';
             }
         }
